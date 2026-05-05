@@ -27,10 +27,9 @@ def green_avg_by_month():
     提示：df['order_date'].dt.month
     """
     # TODO: 你的程式碼
+    df = _load_data()  # 必須先讀取資料，否則會報錯
     ts = df.groupby(df['order_date'].dt.month)
-
-    monthly = ts['amount'].mean() 
-    return monthly
+    return ts['amount'].mean()
 
 
 def green_top3_dates():

@@ -55,6 +55,7 @@ def yellow_clean_columns(df):
     提示：df.columns.str.strip().str.lower()
     """
     # TODO: 你的程式碼
+    df_new = df.copy()
     df_new.columns = df_new.columns.str.strip().str.lower()
     return df_new
 

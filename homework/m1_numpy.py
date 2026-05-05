@@ -19,9 +19,8 @@ import numpy as np
 def green_mean():
     """建立 [10, 20, 30, 40, 50]，回傳所有元素的平均值 (float)"""
     # TODO: 你的程式碼
-    def green_mean():
-        arr = np.array([10, 20, 30, 40, 50])
-        return float(np.mean(arr))
+    arr = np.array([10, 20, 30, 40, 50])
+    return float(np.mean(arr))
 
 
 def green_double():
@@ -62,7 +61,7 @@ def yellow_top3_stock_indices(stocks):
     """
     # TODO: 你的程式碼
     stocks_3 = np.argsort(stocks)
-    return (stocks_3[0:3])
+    return (stocks_3[::-1][:3])
 
 
 def yellow_restock_cost(prices, stocks):
@@ -71,7 +70,7 @@ def yellow_restock_cost(prices, stocks):
     提示：布林遮罩 + .sum()
     """
     # TODO: 你的程式碼
-    prices_500 = prices[prices < 500]*500
+    prices_500 = prices[prices < 500]*50
     return (prices_500.sum())
 
 

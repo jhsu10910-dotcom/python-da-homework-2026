@@ -68,11 +68,11 @@ def yellow_gold_vip_stats(df):
     提示：df[df['vip_level'] == 'Gold']
     """
     # TODO: 你的程式碼
-    vip_rev = df.groupby('vip_level')['amount'].sum()
-    vip_pct = (vip_rev / vip_rev.sum() * 100).round(1)
-    vip_report = pd.DataFrame({'總金額': vip_rev, '佔比(%)': vip_pct})
-    vip_report = vip_report.sort_values('總金額', ascending=False)
-    return vip_report
+    gold_df = df[df['vip_level'] == 'Gold']
+    order_count = int(len(gold_df))
+    total_amount = float(gold_df['amount'].sum())
+
+    return (order_count, total_amount)
 
 
 def yellow_region_avg_amount(df):
