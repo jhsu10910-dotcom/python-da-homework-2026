@@ -22,20 +22,17 @@ def green_mean():
     arr = np.array([10, 20, 30, 40, 50])
     return float(np.mean(arr))
 
-
 def green_double():
     """建立 [10, 20, 30, 40, 50]，回傳所有元素乘以 2 的 ndarray"""
     # TODO: 你的程式碼
     arr = np.array([10, 20, 30, 40, 50])
     return (arr * 2)
 
-
 def green_filter():
     """建立 [10, 20, 30, 40, 50]，回傳大於 25 的元素 (ndarray)"""
     # TODO: 你的程式碼
     arr = np.array([10, 20, 30, 40, 50])
     return (arr[arr > 25])
-
 
 # ============================================================
 # 🟡 核心題（每題 15 分，共 45 分）
@@ -49,10 +46,7 @@ def yellow_expensive_count(prices):
     """回傳單價 > 1000 的商品數量 (int)"""
     # TODO: 你的程式碼
     prices_1000 = prices[prices > 1000]
-    return (prices_1000.shape[0])
-
-    
-
+    return (prices_1000.shape[0])   
 
 def yellow_top3_stock_indices(stocks):
     """
@@ -72,8 +66,6 @@ def yellow_restock_cost(prices, stocks):
     # TODO: 你的程式碼
     prices_500 = prices[prices < 500]*50
     return (prices_500.sum())
-
-
 
 # ============================================================
 # 🔴 挑戰題（25 分）
@@ -101,5 +93,4 @@ def red_double11_prices(prices, stocks):
             prices                           
     )
 )
-    
     return new_prices
