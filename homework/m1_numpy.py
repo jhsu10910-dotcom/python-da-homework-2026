@@ -22,6 +22,7 @@ def green_mean():
     arr = np.array([10, 20, 30, 40, 50])
     return float(np.mean(arr))
 
+
 def green_double():
     """建立 [10, 20, 30, 40, 50]，回傳所有元素乘以 2 的 ndarray"""
     # TODO: 你的程式碼
