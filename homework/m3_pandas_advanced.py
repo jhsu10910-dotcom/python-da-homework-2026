@@ -24,9 +24,15 @@ def green_load_and_merge():
     提示：pd.merge(how='left')
     """
     # TODO: 你的程式碼
-    oc = orders.merge(customers, on='customer_id', how='left')
-    ocp = oc.merge(products, on='product_id', how='left')
-    return ocp
+    orders = pd.read_csv('datasets/ecommerce/orders_clean.csv')
+    customers = pd.read_csv('datasets/ecommerce/customers.csv')
+    products  = pd.read_csv('datasets/ecommerce/products.csv')
+    df=(
+        orders
+        .merge(customers,on='customer_id',how='left')
+        .merge(products,on='product_id',how='left')
+    )
+    return df
 
 
 def green_row_count(df):
@@ -107,26 +113,11 @@ def red_rfm_top5(df):
     提示：groupby('customer_id').agg(...)
     """
     # TODO: 你的程式碼
-    rfm = (
-    orders.groupby('customer_id')
-          .agg(
-              R=('order_date', 'max'),
-              F=('order_id',   'count'),
-              M=('amount',     'sum'),
-          )
-          .reset_index()
-    )
-    rfm_named = rfm.merge(
-    customers[['customer_id', 'customer_name']],
-    on='customer_id',
-    how='left',
-    )
-
-    top5 = (
-    rfm_named
-    .sort_values('M', ascending=False)
-    .head(5)
-    .reset_index(drop=True)
-    [['customer_id', 'customer_name', 'R', 'F', 'M']]
-    )
-    return top5
+    rfm = df.groupby('customer_id').agg(
+        R=('order_date', 'max'),
+        F=('order_id', 'count'),
+        M=('amount', 'sum'),
+        customer_name=("customer_name", "first")
+    ).reset_index()
+    result = rfm.sort_values('M',ascending=False).head()
+    return result[["customer_id", "customer_name", "R", "F", "M"]]

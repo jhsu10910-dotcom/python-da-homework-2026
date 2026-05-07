@@ -20,8 +20,7 @@ def green_read_csv():
     提示：pd.read_csv()
     """
     # TODO: 你的程式碼
-    df = pd.read_csv(DATA)
-    return df
+    return pd.read_csv('datasets/ecommerce/orders_raw.csv')
 
 
 def green_shape(df):
@@ -104,22 +103,10 @@ def red_clean_orders(path):
     提示：pd.to_datetime(errors='coerce')
     """
     # TODO: 你的程式碼
-    # 1
     df = pd.read_csv(path)
-    # 2
-    df.columns = df_new.columns.str.strip().str.lower()
-    # 3
-    df['amount'] = (
-        df['amount']
-        .astype(str)
-        .str.replace('$', '', regex=False)
-        .str.replace(',', '', regex=False)
-        .astype(float)
-    )
-    # 4
+    df.columns = df.columns.str.strip().str.lower()
+    df['amount'] = df['amount'].astype(str).str.replace('$','',regex=False).str.replace(',','',regex=False).astype(float)
     df['order_date'] = pd.to_datetime(df['order_date'], errors='coerce')
-    # 5
-    df = df.dropna(subset=['amount', 'order_date'])
-    # 6
-    df.drop_duplicates()
+    df = df.dropna(subset=['order_date','amount']) # 只要這兩個欄位中任一個有缺失值，該列就會被剔除。
+    df = df.drop_duplicates()
     return df
