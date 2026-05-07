@@ -10,11 +10,6 @@ M3 Pandas 進階：merge / groupby / RFM — 課後作業
   - datasets/ecommerce/products.csv
 """
 import pandas as pd
-import numpy as np
-DATA = '../datasets/ecommerce'
-orders    = pd.read_csv(f'{DATA}/orders_clean.csv', parse_dates=['order_date'])
-customers = pd.read_csv(f'{DATA}/customers.csv')
-products  = pd.read_csv(f'{DATA}/products.csv')
 
 
 # ============================================================
@@ -29,21 +24,19 @@ def green_load_and_merge():
     提示：pd.merge(how='left')
     """
     # TODO: 你的程式碼
-    oc = orders.merge(customers, on='customer_id', how='left')
-    ocp = oc.merge(products, on='product_id', how='left')
-    return ocp
+    pass
 
 
 def green_row_count(df):
     """回傳 DataFrame 的列數 (int)"""
     # TODO: 你的程式碼
-    return len(df)
+    pass
 
 
 def green_column_list(df):
     """回傳 DataFrame 的所有欄位名稱 (list)"""
     # TODO: 你的程式碼
-    return list(df)
+    pass
 
 
 # ============================================================
@@ -57,8 +50,7 @@ def yellow_top_category(df):
     提示：groupby('category')['amount'].sum()
     """
     # TODO: 你的程式碼
-    category_rev = df.groupby('category')['amount'].sum().sort_values(ascending=False)
-    return category_rev.idxmax()
+    pass
 
 
 def yellow_gold_vip_stats(df):
@@ -68,11 +60,7 @@ def yellow_gold_vip_stats(df):
     提示：df[df['vip_level'] == 'Gold']
     """
     # TODO: 你的程式碼
-    gold_df = df[df['vip_level'] == 'Gold']
-    order_count = int(len(gold_df))
-    total_amount = float(gold_df['amount'].sum())
-
-    return (order_count, total_amount)
+    pass
 
 
 def yellow_region_avg_amount(df):
@@ -82,13 +70,7 @@ def yellow_region_avg_amount(df):
     提示：groupby('region')['amount'].mean()
     """
     # TODO: 你的程式碼
-    region_mean = (
-    df.groupby('region')['amount']
-      .mean()
-      .round(2)
-      .sort_values(ascending=False)
-    )
-    return region_mean
+    pass
 
 
 # ============================================================
@@ -112,26 +94,4 @@ def red_rfm_top5(df):
     提示：groupby('customer_id').agg(...)
     """
     # TODO: 你的程式碼
-    rfm = (
-    orders.groupby('customer_id')
-          .agg(
-              R=('order_date', 'max'),
-              F=('order_id',   'count'),
-              M=('amount',     'sum'),
-          )
-          .reset_index()
-    )
-    rfm_named = rfm.merge(
-    customers[['customer_id', 'customer_name']],
-    on='customer_id',
-    how='left',
-    )
-
-    top5 = (
-    rfm_named
-    .sort_values('M', ascending=False)
-    .head(5)
-    .reset_index(drop=True)
-    [['customer_id', 'customer_name', 'R', 'F', 'M']]
-    )
-    return top5
+    pass
