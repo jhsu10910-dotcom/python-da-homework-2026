@@ -19,19 +19,22 @@ import numpy as np
 def green_mean():
     """建立 [10, 20, 30, 40, 50]，回傳所有元素的平均值 (float)"""
     # TODO: 你的程式碼
-    pass
+    arr = np.array([10, 20, 30, 40, 50])
+    return float(np.mean(arr))
 
 
 def green_double():
     """建立 [10, 20, 30, 40, 50]，回傳所有元素乘以 2 的 ndarray"""
     # TODO: 你的程式碼
-    pass
+    arr = np.array([10, 20, 30, 40, 50])
+    return (arr * 2)
 
 
 def green_filter():
     """建立 [10, 20, 30, 40, 50]，回傳大於 25 的元素 (ndarray)"""
     # TODO: 你的程式碼
-    pass
+    arr = np.array([10, 20, 30, 40, 50])
+    return (arr[arr > 25])
 
 
 # ============================================================
@@ -42,7 +45,11 @@ def green_filter():
 def yellow_expensive_count(prices):
     """回傳單價 > 1000 的商品數量 (int)"""
     # TODO: 你的程式碼
-    pass
+    DATA = '../datasets/ecommerce/products.csv'
+    prices = np.genfromtxt(DATA, delimiter=',', skip_header=1, usecols=3)  # unit_price
+    stocks = np.genfromtxt(DATA, delimiter=',', skip_header=1, usecols=4)  # stock_qty
+    prices_1000 = prices[prices > 1000]
+    return (prices_1000.shape[0]) 
 
 
 def yellow_top3_stock_indices(stocks):
@@ -51,7 +58,9 @@ def yellow_top3_stock_indices(stocks):
     提示：np.argsort
     """
     # TODO: 你的程式碼
-    pass
+    stocks_3 = np.argsort(stocks)
+    return (stocks_3[::-1][:3])
+
 
 
 def yellow_restock_cost(prices, stocks):
@@ -60,7 +69,8 @@ def yellow_restock_cost(prices, stocks):
     提示：布林遮罩 + .sum()
     """
     # TODO: 你的程式碼
-    pass
+    prices_500 = prices[prices < 500]*50
+    return (prices_500.sum())
 
 
 # ============================================================
@@ -77,4 +87,16 @@ def red_double11_prices(prices, stocks):
     提示：np.where 可以巢狀使用
     """
     # TODO: 你的程式碼
-    pass
+    prices = np.array(prices)
+    stocks = np.array(stocks)
+    
+    new_prices = np.where(
+        stocks >= 100,                       
+        prices * 0.7,                        
+        np.where(
+            stocks >= 20,                    
+            prices * 0.9,                    
+            prices                           
+    )
+)
+    return new_prices
