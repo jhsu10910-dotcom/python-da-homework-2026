@@ -45,11 +45,8 @@ def green_filter():
 def yellow_expensive_count(prices):
     """回傳單價 > 1000 的商品數量 (int)"""
     # TODO: 你的程式碼
-    DATA = '../datasets/ecommerce/products.csv'
-    prices = np.genfromtxt(DATA, delimiter=',', skip_header=1, usecols=3)  # unit_price
-    stocks = np.genfromtxt(DATA, delimiter=',', skip_header=1, usecols=4)  # stock_qty
-    prices_1000 = prices[prices > 1000]
-    return (prices_1000.shape[0]) 
+    mask = prices > 1000
+    return mask.sum()
 
 
 def yellow_top3_stock_indices(stocks):

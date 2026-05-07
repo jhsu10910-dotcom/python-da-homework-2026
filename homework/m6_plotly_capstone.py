@@ -26,7 +26,10 @@ def green_plotly_bar():
     提示：px.bar()
     """
     # TODO: 你的程式碼
-    pass
+    df = pd.read_csv("datasets/ecommerce/orders_enriched.csv")
+    rev_by_cat = df.groupby('category')['amount'].sum().reset_index()
+    fig = px.bar(rev_by_cat, x='category', y='amount', title="Revenue by Category")
+    return fig
 
 
 def green_plotly_line():
@@ -37,7 +40,11 @@ def green_plotly_line():
     提示：先 groupby 月份算總營收，再 px.line()
     """
     # TODO: 你的程式碼
-    pass
+    df = pd.read_csv("datasets/ecommerce/orders_enriched.csv", parse_dates=['order_date'])
+    df['month'] = df['order_date'].dt.to_period('M').astype(str)
+    monthly_rev = df.groupby('month')['amount'].sum().reset_index()
+    fig = px.line(monthly_rev, x='month', y='amount', title="Monthly Revenue Trend", markers=True)
+    return fig
 
 
 def green_plotly_pie():
@@ -48,7 +55,9 @@ def green_plotly_pie():
     提示：px.pie()
     """
     # TODO: 你的程式碼
-    pass
+    df = pd.read_csv("datasets/ecommerce/orders_enriched.csv")
+    fig = px.pie(df, names='vip_level', values='amount', title="Revenue Share by VIP Level")
+    return fig
 
 
 # ============================================================

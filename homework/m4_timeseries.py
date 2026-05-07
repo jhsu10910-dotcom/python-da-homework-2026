@@ -27,7 +27,9 @@ def green_avg_by_month():
     提示：df['order_date'].dt.month
     """
     # TODO: 你的程式碼
-    pass
+    df = _load_data()  # 必須先讀取資料，否則會報錯
+    ts = df.groupby(df['order_date'].dt.month)
+    return ts['amount'].mean()
 
 
 def green_top3_dates():
@@ -37,7 +39,8 @@ def green_top3_dates():
     提示：value_counts().head(3)
     """
     # TODO: 你的程式碼
-    pass
+    top3 = df['order_date'].value_counts().head(3)
+    return top3
 
 
 def green_date_range():
@@ -46,7 +49,10 @@ def green_date_range():
     格式為 pandas Timestamp
     """
     # TODO: 你的程式碼
-    pass
+    first_date = df['order_date'].min()
+    last_date = df['order_date'].max()
+    
+    return (first_date, last_date)
 
 
 # ============================================================
@@ -60,7 +66,8 @@ def yellow_monthly_revenue():
     提示：set_index('order_date').resample('ME')['amount'].sum()
     """
     # TODO: 你的程式碼
-    pass
+    monthly_rev = df.set_index('order_date').resample('ME')['amount'].sum()
+    return monthly_rev
 
 
 def yellow_rolling_avg(monthly_revenue):
@@ -71,7 +78,9 @@ def yellow_rolling_avg(monthly_revenue):
     提示：.rolling(window=3).mean()
     """
     # TODO: 你的程式碼
-    pass
+    monthly_revenue = yellow_monthly_revenue()
+    mo3   = monthly_revenue.rolling(window=3).mean() 
+    return mo3
 
 
 def yellow_category_median(df):
@@ -81,7 +90,13 @@ def yellow_category_median(df):
     提示：groupby + median + sort_values
     """
     # TODO: 你的程式碼
-    pass
+    result = (
+        df.groupby('category')['amount']
+          .median()
+          .sort_values(ascending=False)
+    )
+    
+    return result
 
 
 # ============================================================
@@ -101,4 +116,25 @@ def red_monthly_report():
     提示：resample + agg + pct_change
     """
     # TODO: 你的程式碼
-    pass
+    monthly_report = (
+        df.set_index('order_date')
+          .resample('ME')
+          .agg(
+              order_count=('order_id', 'count'),      # 當月訂單數
+              revenue=('amount', 'sum'),              # 當月總營收
+              active_customers=('customer_id', 'nunique') # 當月不重複客戶數
+          )
+    )
+
+    # 3. 計算客單價 (AOV): 總營收 / 訂單數
+    monthly_report['avg_order_value'] = (
+        monthly_report['revenue'] / monthly_report['order_count']
+    )
+
+    # 4. 計算月營收成長率: 使用 pct_change 算出與上月的變化
+    # 乘上 100 轉換成百分比格式
+    monthly_report['revenue_growth'] = (
+        monthly_report['revenue'].pct_change() * 100
+    ).round(2)
+
+    return monthly_report
